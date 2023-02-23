@@ -55,4 +55,4 @@ E.g.:
 
 ## Finally
 People who made and do maintain flatpickr did great work to help us make our development easier.
-Please give a Star the developer: https://github.com/flatpickr/flatpickr
+Please give a Star to the developer: https://github.com/flatpickr/flatpickr
