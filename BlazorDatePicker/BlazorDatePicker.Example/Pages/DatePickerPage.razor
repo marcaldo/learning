@@ -1,0 +1,53 @@
+﻿@page "/date"
+@using BlazorDatePicker.Example.Shared.Components;
+@using System.Globalization;
+
+<h3>Blazor localized flatpickr example</h3>
+
+<p class="col-5">
+    <select class="form-control" @onchange="SetLocale">
+        <option value="default">English</option>
+        <option value="es">Español</option>
+        <option value="de">Deutsch</option>
+        <option value="fr">Français</option>
+        <option value="it">Italiano</option>
+        <option value="pt">Português</option>
+        <option value="ru">русский</option>
+        <option value="ar">عربي</option>
+        <option value="sv">Svenska</option>
+    </select>
+</p>
+
+<p class="col-5">
+    <Flatpickr />
+    <Flatpickr Locale="@locale" Placeholder="Enter a date..." OnChange="DateChanged" />
+</p>
+
+<p class="col-5">
+    <label>Captured date:</label>
+    <input class="form-control" value="@resultDate" readonly />
+</p>
+
+@code {
+    string locale = "default";
+    string resultDate = "";
+
+    void SetLocale(ChangeEventArgs e)
+    {
+        locale = e.Value!.ToString()!;
+        resultDate = string.Empty;
+    }
+
+    void DateChanged(DateTime newDate)
+    {
+        /* This is a rudimentary implementation to get the date format.
+           Real applications should handle the culture by considering
+           the correct date formatting according to the user's culture.
+           (In this case, the default format will be en-US.) */
+
+        var parentCultureName = locale.Equals("default") ? "en" : locale;
+        var culture = CultureInfo.CreateSpecificCulture(parentCultureName);
+
+        resultDate = newDate.ToString(culture.DateTimeFormat.ShortDatePattern);
+    }
+}

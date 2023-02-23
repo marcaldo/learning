@@ -1,0 +1,45 @@
+﻿@using Microsoft.JSInterop;
+@inject IJSRuntime JSRuntime;
+
+<input id="@Id" class="flatpickr" type="text" placeholder="@Placeholder" />
+
+@code {
+    [Parameter] public string? Id { get; set; }
+    [Parameter] public string? Placeholder { get; set; }
+    [Parameter] public string Locale { get; set; } = "default";
+    [Parameter] public EventCallback<DateTime> OnChange { get; set; }
+
+
+    protected override void OnInitialized()
+    {
+        Id = Id ?? $"d{Guid.NewGuid().ToString("N")}";
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        // Parameters can be set here to use them in the javascript code
+        // through JS Interop.
+        // See https://flatpickr.js.org/options/ for more options to add.
+
+        var datepickerData = new
+        {
+            Id = Id,
+            Locale = Locale,
+            AltInput = true,
+            AltFormat = "F j, Y"
+        };
+
+        var dotNetObjectReference = DotNetObjectReference.Create(this);
+        await JSRuntime.InvokeVoidAsync("onBlazorReady", datepickerData, dotNetObjectReference);
+    }
+
+
+    [JSInvokable]
+    public async Task DateChangedInterop(string inputDate)
+    {
+        if (DateTime.TryParse(inputDate, out DateTime resultDate))
+        {
+            await OnChange.InvokeAsync(resultDate);
+        }
+    }
+}
