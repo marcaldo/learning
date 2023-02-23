@@ -19,7 +19,6 @@
 </p>
 
 <p class="col-5">
-    <Flatpickr />
     <Flatpickr Locale="@locale" Placeholder="Enter a date..." OnChange="DateChanged" />
 </p>
 
@@ -38,7 +37,7 @@
         resultDate = string.Empty;
     }
 
-    void DateChanged(DateTime newDate)
+    Task DateChanged(DateTime newDate)
     {
         /* This is a rudimentary implementation to get the date format.
            Real applications should handle the culture by considering
@@ -49,5 +48,7 @@
         var culture = CultureInfo.CreateSpecificCulture(parentCultureName);
 
         resultDate = newDate.ToString(culture.DateTimeFormat.ShortDatePattern);
+
+        return Task.CompletedTask;
     }
 }

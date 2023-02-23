@@ -7,9 +7,7 @@ window.onBlazorReady = (dataRef, netObjRef) => {
     });
 };
 
-function setDatePicker(dataRef) {
-    //const dSelector = `#${data.id}`;
-
+setDatePicker = (dataRef) => {
     flatpickr(`#${dataRef.id}`, {
         locale: dataRef.locale,
         altInput: dataRef.altInput,
