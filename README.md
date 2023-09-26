@@ -5,7 +5,7 @@ In the project, the tag
 ```
 <Flatpickr />
 ```
-Depending on the CSS style, it will produce something like
+Depending on the CSS, it will produce something like
 
 ![image](https://github.com/marcaldo/learning/assets/9356049/aad42dfd-d215-4617-9272-a72c54ae822e)
 
